@@ -376,7 +376,17 @@ void *elevatorController(void* args){
                         e2.status=getStatus(i-e2.position);
                     }
                 }else{//若都不空闲
-                    printf("no elevator is free.\n");
+                    if(e1.status==per[i][2]){//判断1号电梯的方向和请求者方向是否相同
+                        if(IdentifySign(e1.status,per[i][0]-e1.position)){//判断方向相同时是否可以不改变方向到达
+                            addStayIn1(per[i][0]);
+                        }
+                    }else if(e2.status==per[i][2]){//判断2号电梯的方向和请求者方向是否相同
+                        if(IdentifySign(e2.status,per[i][0]-e2.position)){//判断方向相同时是否可以不改变方向到达
+                            addStayIn2(per[i][0]);
+                        }
+                    }else{
+                        printf("no elevator is free.\n");
+                    }
                 }
                 begin=i+1;
                 break;
